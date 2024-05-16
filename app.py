@@ -1,22 +1,50 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
 @app.route('/home')
-def hello_world():
-    return '<center><h1 style="color: red">Hello from home page</h1></center>'
-
-
-@app.route('/contact')
-def hello_contact():
-    return '<center><h1 style="color: hotpink">Hello from contact page</h1></center>'
+def home():
+    student_list = [
+        {
+            'id': 'st001',
+            'name': 'vuthy',
+            'gender': 'male',
+            'profile': 'sara.jpeg',
+        },
+        {
+            'id': 'st002',
+            'name': 'dara',
+            'gender': 'male',
+            'profile': 'sara.jpeg',
+        },
+        {
+            'id': 'st001',
+            'name': 'vuthy',
+            'gender': 'male',
+            'profile': 'sara.jpeg',
+        },
+        {
+            'id': 'st002',
+            'name': 'dara',
+            'gender': 'male',
+            'profile': 'sara.jpeg',
+        },
+    ]
+    age = 100
+    return render_template('home.html', student_list=student_list)
 
 
 @app.route('/about')
-def hello_about():
-    return '<center><h1 style="color: DarkSeaGreen">Hello from about page</h1></center>'
+def about():
+    return render_template('about.html')
+
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 
 
 if __name__ == '__main__':
