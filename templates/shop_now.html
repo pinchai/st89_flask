@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include "header_style.html" %}
+    <title>Shop Now</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+{% include "navbar.html" %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-12 mt-4">
+            <div class="card" style="width: 100%;">
+                <img
+                        src="{{ product['image'] }}"
+                        class="card-img-top img-fluid img-thumbnail"
+                        alt="{{ product['image'] }}"
+                >
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 mt-4">
+            <div class="card-header">
+                <h5 class="card-title">{{ product['title'] }}</h5>
+                <span class="badge badge-success">
+                    {{ product['category'] }}
+                </span>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title">{{ product['description'] }}</h6>
+                <p class="card-text" style="font-style: 18px; font-weight: bold">
+                    {{ product['price'] }}$
+                </p>
+                <a
+                        href="/checkout?id={{ product['id'] }}"
+                        target="_self"
+                        class="btn btn-primary"
+                >Book Now 😘</a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+</body>
+{% include "footer_script.html" %}
+</html>

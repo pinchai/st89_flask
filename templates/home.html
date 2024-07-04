@@ -15,14 +15,30 @@
 {% include "navbar.html" %}
 <div class="container">
     <div class="row">
-        {% for item in range(12) %}
+        {% for item in product_list %}
             <div class="col-md-3 col-sm-12 mt-4">
                 <div class="card" style="width: 100%;">
-                    <img src="/static/sara.jpeg" class="card-img-top" alt="...">
+                    <div
+                            style="height: 200px; overflow: hidden"
+                    >
+                        <img
+                                src="{{ item['image'] }}"
+                                class="card-img-top"
+                                alt="{{ item['image'] }}"
+                        >
+                    </div>
+
                     <div class="card-body">
-                        <h5 class="card-title">Sara</h5>
-                        <p class="card-text">2.3 $</p>
-                        <a href="#" class="btn btn-primary">Shop Now</a>
+                        <h5
+                                class="card-title"
+                                style="height: 70px; overflow: auto"
+                        >{{ item['title'] }}</h5>
+                        <p class="card-text">{{ item['price'] }} $</p>
+                        <a
+                                href="/shop_now?id={{ item['id'] }}"
+                                target="_blank"
+                                class="btn btn-primary"
+                        >Shop Now</a>
                     </div>
                 </div>
             </div>
@@ -30,27 +46,6 @@
     </div>
 </div>
 
-{% if False %}
-    <center>
-        <ul style="list-style-type: none">
-            {% for student in student_list %}
-                <li>
-                    <img
-                            style="width: 100px; border-radius: 10px"
-                            src="/static/{{ student.profile }}"
-                    >
-                </li>
-                <li>{{ student.id }}</li>
-                <li>{{ student.name }}</li>
-                <li>{{ student.gender }}</li>
-                <li>{{ student.profile }}</li>
-
-                <hr>
-            {% endfor %}
-        </ul>
-
-    </center>
-{% endif %}
 
 
 </body>
