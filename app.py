@@ -1,18 +1,23 @@
 from flask import Flask, render_template, request
+from sqlalchemy import create_engine, text
 import requests
 from datetime import date
 
 app = Flask(__name__)
+
+engine = create_engine("mysql+mysqlconnector://root:mysql@127.0.0.1/st89_pos")
+# Test the connection
+connection = engine.connect()
+result = connection.execute(text("SELECT * FROM user"))
+for user in result:
+    print(f"{user[0]} - {user[1]} - {user[2]} - {user[3]}")
+# print(result)
 
 
 @app.route('/')
 @app.route('/home')
 def home():
     student_list = []
-
-    arr = [1,2,3]
-    print(arr[5])
-
     res = requests.get('https://fakestoreapi.com/products')
     res_json = res.json()
     return render_template('home.html', product_list=res_json)
