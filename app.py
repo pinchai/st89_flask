@@ -9,6 +9,10 @@ app = Flask(__name__)
 @app.route('/home')
 def home():
     student_list = []
+
+    arr = [1,2,3]
+    print(arr[5])
+
     res = requests.get('https://fakestoreapi.com/products')
     res_json = res.json()
     return render_template('home.html', product_list=res_json)
@@ -97,6 +101,16 @@ def submitContact():
     return 'work'
 
 
+@app.errorhandler(404)
+def error404(e):
+    return render_template('/error/404.html')
+
+
+@app.errorhandler(500)
+def error404(e):
+    return render_template('/error/500.html')
+
+
 if __name__ == '__main__':
     app.run()
 
@@ -111,5 +125,3 @@ def sendNotify(msg):
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={html}&parse_mode=HTML"
     res = requests.get(url)
     return res
-
-
