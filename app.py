@@ -1,17 +1,30 @@
-from flask import Flask, render_template, request
-from sqlalchemy import create_engine, text
-
+from flask import Flask, render_template, request, redirect, json, flash, session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'secret-key-goes-here'
 
-engine = create_engine("mysql+mysqlconnector://root:mysql@127.0.0.1/st89_pos")
-# Test the connection
-connection = engine.connect()
-result = connection.execute(text("SELECT * FROM user"))
-# for user in result:
-#     print(f"{user[0]} - {user[1]} - {user[2]} - {user[3]}")
-# print(result)
 
+@app.get('/login')
+def login():
+    # data = generate_password_hash('123456')
+    # verify = check_password_hash(data, '123456')
+    # return [data, verify]
+    return render_template('auth/login.html')
+
+
+@app.post('/do_login')
+def do_login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+    if username == 'admin' and password == '123':
+        session['is_login'] = True
+        return 'login success'
+    else:
+        return redirect('/login')
+        # data = generate_password_hash('123456')
+        # verify = check_password_hash(data, '123456')
+        # return [data, verify]
 
 import routes
 

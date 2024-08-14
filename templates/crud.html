@@ -2,35 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Raw JS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    {% include "header_style.html" %}
+    <title>Home | ទំព័រដើម</title>
 </head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+</style>
 <body>
+{% include "navbar.html" %}
 <div class="container">
     <div class="row">
         <div class="col-4 mt-4">
             <div class="card" style="box-shadow: 2px 3px 5px gray;">
                 <div class="card-body">
-                    <form>
+                    <form method="post" enctype="multipart/form-data" action="/create">
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name">
+                            <input required type="text" class="form-control" id="name" name="name">
                         </div>
                         <div class="form-group">
                             <label for="name">Gender</label>
-                            <select class="form-control" id="name">
+                            <select class="form-control" id="gender" name="gender">
                                 <option>male</option>
                                 <option>female</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone">
+                            <input type="text" class="form-control" id="phone" name="phone">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email">
+                            <input type="email" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Address</label>
+                            <textarea class="form-control" id="address" name="address"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary float-right">Save</button>
                     </form>
@@ -53,28 +63,25 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>dara</td>
-                            <td>male</td>
-                            <td>099 88 73 553</td>
-                            <td>dara@mail.com</td>
-                            <td>
-                                <input type="button" class="btn btn-outline-danger" value="delete">
-                                <input type="button" class="btn btn-outline-warning" value="edit">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>kanha</td>
-                            <td>female</td>
-                            <td>099 88 73 553</td>
-                            <td>kanha@mail.com</td>
-                            <td>
-                                <input type="button" class="btn btn-outline-danger" value="delete">
-                                <input type="button" class="btn btn-outline-warning" value="edit">
-                            </td>
-                        </tr>
+                        {% for item in data %}
+                            <tr>
+                                <td>U00{{ loop.index }}</td>
+                                <td>{{ item['name'] }}</td>
+                                <td>{{ item['gender'] }}</td>
+                                <td>099 88 73 553</td>
+                                <td>dara@mail.com</td>
+                                <td>
+                                    <a href="/confirm_delete?id={{ item['id'] }}">
+                                        <input
+                                                type="button"
+                                                class="btn btn-sm btn-outline-danger"
+                                                value="delete"
+                                        >
+                                    </a>
+                                    <input type="button" class="btn btn-sm btn-outline-warning" value="edit">
+                                </td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -83,4 +90,5 @@
     </div>
 </div>
 </body>
+{% include "footer_script.html" %}
 </html>
