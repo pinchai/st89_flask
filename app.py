@@ -9,6 +9,9 @@ app.config['SECRET_KEY'] = 'secret-key-goes-here'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
 
 
+import routes
+
+
 @app.get('/login')
 def login():
     # data = generate_password_hash('123456')
@@ -47,9 +50,6 @@ def admin():
     if 'is_login' in session:
         return render_template('auth/admin.html', data=session["is_login"])
     return 'You are not logged in <br><a href="/login">Login</a>'
-
-
-import routes
 
 
 if __name__ == '__main__':
