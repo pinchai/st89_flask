@@ -1,7 +1,7 @@
 from app import app, render_template, request, redirect
 from sqlalchemy import create_engine, text
 
-engine = create_engine("mysql+mysqlconnector://root:@127.0.0.1/st89_pos")
+engine = create_engine("mysql+mysqlconnector://root:mysql@127.0.0.1/st89_pos")
 # Test the connection
 connection = engine.connect()
 
