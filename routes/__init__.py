@@ -6,4 +6,5 @@ from routes import error
 from routes import crud_with_api
 
 # Admin Routs
-from routes.admin import dashbord
+from routes.admin import dashboard
+from routes.admin import user
