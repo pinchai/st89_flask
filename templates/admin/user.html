@@ -140,17 +140,17 @@
                                             <td>[[ item.email ]]</td>
                                             <td>[[ item.address ]]</td>
                                             <td>
-                                                <button class="btn btn-sm btn-outline-secondary">
+                                                <button class="btn btn-sm btn-outline-secondary mr-2">
                                                     <i class="fas fa-eye"></i>
                                                 </button>
                                                 <button
                                                         @click="getEdit(item)"
-                                                        class="btn btn-sm btn-outline-primary">
+                                                        class="btn btn-sm btn-outline-primary mr-2">
                                                     <i class="fas fa-edit"></i>
                                                 </button>
                                                 <button
                                                         @click="deleteRecord(item.id)"
-                                                        class="btn btn-sm btn-outline-danger">
+                                                        class="btn btn-sm btn-outline-danger mr-2">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -176,33 +176,13 @@
         createApp({
             delimiters: ['[[', ']]'],
             created() {
-
+                this.fetchData()
             },
             mounted() {
                 //this.openModal()
             },
             data() {
                 return {
-                    user_list: [
-                        {
-                            'id': 1,
-                            'name': 'dara',
-                            'gender': 'male',
-                            'password': '12312',
-                            'phone': '010725242',
-                            'email': 'dara@mail.com',
-                            'address': 'PP',
-                        },
-                        {
-                            'id': 2,
-                            'name': 'thida',
-                            'gender': 'female',
-                            'password': '12312',
-                            'phone': '09987635',
-                            'email': 'thida@mail.com',
-                            'address': 'SR',
-                        }
-                    ],
                     form: {
                         'id': null,
                         'name': null,
@@ -212,8 +192,10 @@
                         'email': 'test@mail.com',
                         'address': '',
                     },
-                    status: 'add'
+                    status: 'add',
+                    user_list: [],
                 }
+                s
             },
             methods: {
                 openModal() {
@@ -223,6 +205,41 @@
                 closeModal() {
                     this.clearForm();
                     $('#modal').modal('hide')
+                },
+                fetchData() {
+                    let vm = this
+                    $.LoadingOverlay("show");
+                    let api_url = "http://127.0.0.1:5000/admin/get-user"
+                    axios.get(api_url)
+                        .then(function (response) {
+                            vm.user_list = response.data
+                            $.LoadingOverlay("hide");
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+                },
+                onSave() {
+                    if (this.name == null || this.name == '') {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Name Field cannot empty",
+                            footer: '<a href="#">Why do I have this issue?</a>'
+                        });
+                        return
+                    }
+
+                    let current_student = {
+                        name: this.name,
+                        gender: this.gender,
+                        phone: this.phone,
+                        email: this.email,
+                    }
+                    this.student_list.push(current_student)
+
+                    this.clearForm()
                 },
                 getEdit(item) {
                     this.status = 'edit'
@@ -247,7 +264,7 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             //this.student_list.splice(index, 1);
-                            alert('deleted: '+id)
+                            alert('deleted: ' + id)
                         } else if (result.isDenied) {
                             //
                         }

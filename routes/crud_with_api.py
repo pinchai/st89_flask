@@ -13,23 +13,23 @@ connection = engine.connect()
 #     return render_template('crud.html', data=result)
 
 
-@app.get('/getUser')
-def getUser():
-    result = connection.execute(text("SELECT * FROM user"))
-    recode = result.fetchall()
-    data = []
-    for item in recode:
-        data.append(
-            {
-                'id': item[0],
-                'name': item[1],
-                'gender': item[2],
-                'address': item[3],
-            }
-        )
-    print(data)
-    connection.commit()
-    return data
+# @app.get('/getUser')
+# def getUser():
+#     result = connection.execute(text("SELECT * FROM user"))
+#     recode = result.fetchall()
+#     data = []
+#     for item in recode:
+#         data.append(
+#             {
+#                 'id': item[0],
+#                 'name': item[1],
+#                 'gender': item[2],
+#                 'address': item[3],
+#             }
+#         )
+#     print(data)
+#     connection.commit()
+#     return data
 #
 #
 # @app.post('/create')
