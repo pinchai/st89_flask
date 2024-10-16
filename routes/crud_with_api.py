@@ -59,13 +59,13 @@ connection = engine.connect()
 #     return render_template('confirm_delete.html', data=data)
 #
 #
-@app.post('/deleteUser')
-def deleteUser():
-    data = request.get_json()
-    user_id = data.get('user_id')
-    result = connection.execute(text(f"DELETE FROM `user` WHERE id = {user_id}"))
-    connection.commit()
-    return f"{user_id}"
+# @app.post('/deleteUser')
+# def deleteUser():
+#     data = request.get_json()
+#     user_id = data.get('user_id')
+#     result = connection.execute(text(f"DELETE FROM `user` WHERE id = {user_id}"))
+#     connection.commit()
+#     return f"{user_id}"
 #
 #
 # @app.route('/delete')

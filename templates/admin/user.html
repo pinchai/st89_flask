@@ -43,7 +43,7 @@
                                 <input v-model="form.email" type="email" class="form-control" id="email" name="email">
                             </div>
                             <div class="form-group">
-                                <label for="email">Address</label>
+                                <label for="address">Address</label>
                                 <textarea v-model="form.address" class="form-control" id="address" name="address">[[ form.name ]]</textarea>
                             </div>
                         </form>
@@ -58,6 +58,7 @@
                             Close
                         </button>
                         <button
+                                @click="onSave()"
                                 v-if="status == 'add'"
                                 type="button"
                                 class="btn btn-outline-primary"
@@ -66,6 +67,7 @@
                             Save
                         </button>
                         <button
+                                @click="edit()"
                                 v-if="status == 'edit'"
                                 type="button"
                                 class="btn btn-outline-primary"
@@ -221,7 +223,7 @@
                         })
                 },
                 onSave() {
-                    if (this.name == null || this.name == '') {
+                    if (this.form.name == null || this.form.name == '') {
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
@@ -230,18 +232,25 @@
                         });
                         return
                     }
-
-                    let current_student = {
-                        name: this.name,
-                        gender: this.gender,
-                        phone: this.phone,
-                        email: this.email,
-                    }
-                    this.student_list.push(current_student)
+                    $.LoadingOverlay("show");
+                    let vm = this
+                    let input = this.form
+                    let api_url = "http://127.0.0.1:5000/admin/create-user"
+                    axios.post(api_url, input)
+                        .then(function (response) {
+                            // handle success
+                            vm.fetchData()
+                            $.LoadingOverlay("hide");
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
 
                     this.clearForm()
                 },
                 getEdit(item) {
+                    console.log(item)
                     this.status = 'edit'
                     this.form.id = item.id
                     this.form.name = item.name
@@ -251,6 +260,33 @@
                     this.form.email = item.email
                     this.form.address = item.address
                     $('#modal').modal('show')
+                },
+                edit() {
+                    if (this.form.name == null || this.form.name == '') {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Name Field cannot empty",
+                            footer: '<a href="#">Why do I have this issue?</a>'
+                        });
+                        return
+                    }
+                    $.LoadingOverlay("show");
+                    let vm = this
+                    let input = this.form
+                    let api_url = "http://127.0.0.1:5000/admin/update-user"
+                    axios.post(api_url, input)
+                        .then(function (response) {
+                            // handle success
+                            vm.fetchData()
+                            $.LoadingOverlay("hide");
+                        })
+                        .catch(function (error) {
+                            // handle error
+                            console.log(error);
+                        })
+
+                    this.clearForm()
                 },
                 deleteRecord(id) {
                     let vm = this
@@ -264,7 +300,20 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             //this.student_list.splice(index, 1);
-                            alert('deleted: ' + id)
+                            //alert('deleted: ' + id)
+                            $.LoadingOverlay("show");
+                            let vm = this
+                            let api_url = "http://127.0.0.1:5000/admin/delete-user"
+                            axios.post(api_url, {user_id: id})
+                                .then(function (response) {
+                                    // handle success
+                                    vm.fetchData()
+                                    $.LoadingOverlay("hide");
+                                })
+                                .catch(function (error) {
+                                    // handle error
+                                    console.log(error);
+                                })
                         } else if (result.isDenied) {
                             //
                         }
@@ -279,6 +328,8 @@
                     this.form.phone = "+855-"
                     this.form.email = '@gmail.com'
                     this.form.address = ''
+
+                    $('#modal').modal('hide')
                 },
             }
         }).mount('#app')
