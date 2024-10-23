@@ -8,3 +8,4 @@ from routes import crud_with_api
 # Admin Routs
 from routes.admin import dashboard
 from routes.admin import user
+from routes.admin import category

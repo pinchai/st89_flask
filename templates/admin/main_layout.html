@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-  <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %}</title>
     {% include 'admin/header_style.html' %}
@@ -82,7 +82,7 @@
                     data-accordion="false">
                     {#Dashboard Menu#}
                     <li class="nav-item">
-                        <a href="/admin" class="nav-link {% if module == 'dashboard'  %}active{% endif %}">
+                        <a href="/admin" class="nav-link {% if module == 'dashboard' %}active{% endif %}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>Dashboard</p>
                         </a>
@@ -90,9 +90,17 @@
 
                     {#User Menu#}
                     <li class="nav-item">
-                        <a href="/admin/user" class="nav-link {% if module == 'user'  %}active{% endif %}">
+                        <a href="/admin/user" class="nav-link {% if module == 'user' %}active{% endif %}">
                             <i class="nav-icon fas fa-user"></i>
                             <p>User</p>
+                        </a>
+                    </li>
+
+                    {#Category#}
+                    <li class="nav-item">
+                        <a href="/admin/category" class="nav-link {% if module == 'category' %}active{% endif %}">
+                            <i class="nav-icon fas fa-cubes"></i>
+                            <p>Category</p>
                         </a>
                     </li>
                     {#Starter Pages#}
@@ -125,7 +133,7 @@
         </div>
         <!-- /.sidebar -->
     </aside>
-    
+
     {% block content %}{% endblock %}
 
     <!-- Control Sidebar -->
