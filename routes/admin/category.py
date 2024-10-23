@@ -13,20 +13,7 @@ def category():
 
 @app.get('/admin/get-category')
 def getCategory():
-    result = connection.execute(text("SELECT * FROM category"))
-    recode = result.fetchall()
-
-    data = []
-    for item in recode:
-        data.append(
-            {
-                'id': item[0],
-                'name': item[1],
-                'description': item[2],
-            }
-        )
-    connection.commit()
-    return data
+    return getCategoryList()
 
 
 @app.post('/admin/create-category')
@@ -68,3 +55,18 @@ def updateCategory():
     return [category_id, name, description]
 
 
+def getCategoryList():
+    result = connection.execute(text("SELECT * FROM category"))
+    recode = result.fetchall()
+
+    data = []
+    for item in recode:
+        data.append(
+            {
+                'id': item[0],
+                'name': item[1],
+                'description': item[2],
+            }
+        )
+    connection.commit()
+    return data

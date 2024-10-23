@@ -9,3 +9,4 @@ from routes import crud_with_api
 from routes.admin import dashboard
 from routes.admin import user
 from routes.admin import category
+from routes.admin import product
